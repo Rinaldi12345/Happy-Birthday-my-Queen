@@ -1,280 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Selamat Ulang Tahun Della Putri Andini</title>
-<!-- Google Fonts untuk kalimat -->
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>Happy Birthday – Della Putri Andini</title>
+
 <style>
-  body {
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
-    height: 100vh;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Pacifico', cursive;
-    position: relative;
-    color: #fff;
-  }
+/* —— Latar & tipografi —— */
+html,body{
+  margin:0;
+  height:100%;
+  overflow:hidden;
+  background:radial-gradient(circle at top, #ffd1dc 0%, #ff9a9e 100%);
+  font-family:'Comic Sans MS', cursive;
+}
 
-  /* Container utama */
-  #container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-  }
+/* —— Panggung utama —— */
+#scene{
+  position:relative;
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+}
 
-  /* Bunga Tulip */
-  #tulip {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 150px;
-    height: 300px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-    z-index: 2;
-  }
+/* —— Batang & bunga —— */
+.tulip{
+  position:relative;
+  width:120px;
+  height:200px;
+  animation:bloom 6s ease-in-out forwards 2s;
+}
 
-  /* Batang bunga */
-  #stem {
-    width: 10px;
-    height: 0;
-    background-color: #4CAF50;
-    border-radius: 5px;
-    transition: height 2s ease;
-  }
+/* Batang */
+.tulip::before{
+  content:'';
+  position:absolute;
+  left:50%; bottom:0;
+  transform:translateX(-50%);
+  width:10px; height:180px;
+  background:#2ecc71;
+  border-radius:5px;
+}
 
-  /* Daun */
-  #leaf {
-    width: 50px;
-    height: 20px;
-    background-color: #228B22;
-    border-radius: 50%;
-    position: absolute;
-    bottom: 50%;
-    left: -15px;
-    transform: rotate(-30deg);
-    opacity: 0;
-    transition: all 2s ease;
-  }
+/* Tiga kelopak */
+.petal{
+  position:absolute;
+  bottom:180px; left:50%;
+  transform-origin:bottom center;
+  background:#e74c3c;
+  width:0; height:0;
+  border-radius:50% 50% 0 0;
+  transform:translate(-50%,0) scaleY(0.3);
+}
 
-  #leaf2 {
-    width: 50px;
-    height: 20px;
-    background-color: #228B22;
-    border-radius: 50%;
-    position: absolute;
-    bottom: 50%;
-    right: -15px;
-    transform: rotate(30deg);
-    opacity: 0;
-    transition: all 2s ease;
-  }
+/* Animasi tiap kelopak */
+.petal:nth-child(1){width:70px;height:100px;animation:petal1 6s ease-in-out forwards 2s;}
+.petal:nth-child(2){width:70px;height:100px;animation:petal2 6s ease-in-out forwards 2s;}
+.petal:nth-child(3){width:70px;height:100px;animation:petal3 6s ease-in-out forwards 2s;}
 
-  /* Bunga mekar (kelopak) */
-  #flower {
-    width: 80px;
-    height: 80px;
-    background-color: #FF69B4;
-    border-radius: 50%;
-    position: relative;
-    margin-top: 10px;
-    transform: scale(0);
-    transition: transform 2s ease, box-shadow 0.5s;
-    box-shadow: 0 0 20px #FF69B4, 0 0 40px #FF69B4 inset;
-  }
+@keyframes petal1{
+  0%  {transform:translate(-50%,0) rotate(0deg)  scaleY(0.5);}
+  60% {transform:translate(-50%,0) rotate(-30deg) scaleY(1);}
+  100%{transform:translate(-50%,0) rotate(-40deg) scaleY(1);}
+}
+@keyframes petal2{
+  0%  {transform:translate(-50%,0) rotate(0deg)  scaleY(0.5);}
+  60% {transform:translate(-50%,0) rotate(30deg)  scaleY(1);}
+  100%{transform:translate(-50%,0) rotate(40deg)  scaleY(1);}
+}
+@keyframes petal3{
+  0%,40% {opacity:0;}
+  60%,100%{opacity:1;transform:translate(-50%,10px) scaleY(1);}
+}
 
-  /* Kelopak tambahan untuk efek mekar */
-  .petal {
-    position: absolute;
-    width: 50px;
-    height: 80px;
-    background-color: #FF1493;
-    border-radius: 50% 50% 0 0;
-    top: -40px;
-    left: 15px;
-    transform-origin: bottom center;
-    opacity: 0;
-    transition: all 1s ease;
-  }
+/* Animasi skala keseluruhan bunga */
+@keyframes bloom{
+  0%  {transform:scale(0.6);}
+  100%{transform:scale(1);}
+}
 
-  /* Posisi kelopak */
-  .petal1 { transform: rotate(0deg); }
-  .petal2 { transform: rotate(45deg); }
-  .petal3 { transform: rotate(-45deg); }
+/* —— Teks ucapan —— */
+#msg{
+  position:absolute;
+  top:10%;
+  width:100%;
+  text-align:center;
+  font-size:2.5em;
+  letter-spacing:2px;
+  opacity:0;
+  animation:msg 2s ease-out forwards 6s; /* muncul saat mekar selesai */
+}
+@keyframes msg{
+  0%  {transform:scale(0.3); opacity:0;}
+  100%{transform:scale(1);   opacity:1;}
+}
 
-  /* Kelopak lainnya */
-  #flower.mekar {
-    transform: scale(1);
-  }
-
-  /* Animasi petasan */
-  #fireworks {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 10px;
-    height: 10px;
-    background: transparent;
-    z-index: 3;
-  }
-
-  /* Petasan */
-  .firework {
-    position: absolute;
-    bottom: 0;
-    width: 4px;
-    height: 4px;
-    background-color: #FFD700;
-    border-radius: 50%;
-    opacity: 0;
-    transform: translateY(0);
-    animation: explode 1s forwards;
-  }
-
-  @keyframes explode {
-    0% {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-    100% {
-      opacity: 0;
-      transform: translateY(-300px) scale(0);
-    }
-  }
-
-  /* Kalimat ucapan */
-  #happyBirthday {
-    position: absolute;
-    top: 20%;
-    width: 100%;
-    text-align: center;
-    font-size: 2em;
-    color: #fff;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-    opacity: 0;
-    animation: fadeIn 2s forwards;
-  }
-
-  @keyframes fadeIn {
-    to { opacity: 1; }
-  }
+/* —— Kanvas kembang-api —— */
+#fireworks{
+  position:fixed;
+  left:0; top:0;
+  width:100%; height:100%;
+  pointer-events:none;   /* klik tak terhalang */
+}
 </style>
 </head>
+
 <body>
+<canvas id="fireworks"></canvas>
 
-<div id="container">
-  <!-- Bunga Tulip -->
-  <div id="tulip" onclick="startAnimation()">
-    <div id="stem"></div>
-    <div id="leaf"></div>
-    <div id="leaf2"></div>
-    <div id="flower">
-      <div class="petal petal1"></div>
-      <div class="petal petal2"></div>
-      <div class="petal petal3"></div>
-    </div>
+<div id="scene">
+  <div class="tulip">
+    <div class="petal"></div>
+    <div class="petal"></div>
+    <div class="petal"></div>
   </div>
-
-  <!-- Petasan -->
-  <div id="fireworks"></div>
-
-  <!-- Kalimat ucapan -->
-  <div id="happyBirthday">Happy Birthday Sayangku Della Putri Andini! 🎉🎂🎁💖</div>
 </div>
 
+<div id="msg">Happy Birthday Sayaangkuu<br>Della Putri Andini</div>
+
 <script>
-  const tulip = document.getElementById('tulip');
-  const stem = document.getElementById('stem');
-  const leaf = document.getElementById('leaf');
-  const leaf2 = document.getElementById('leaf2');
-  const flower = document.getElementById('flower');
-  const petals = document.querySelectorAll('.petal');
-  const fireworksContainer = document.getElementById('fireworks');
-  const happyMsg = document.getElementById('happyBirthday');
+/* ========= KEMBANG API ========= */
+/* Kanvas penuh layar */
+const canvas=document.getElementById('fireworks'),
+      ctx=canvas.getContext('2d');
+let W,H;
+function resize(){W=canvas.width=innerWidth;H=canvas.height=innerHeight;}
+addEventListener('resize',resize); resize();
 
-  let animationStarted = false;
-
-  function startAnimation() {
-    if (animationStarted) return; // agar tidak restart
-    animationStarted = true;
-
-    // Menguncup batang
-    stem.style.height = '0';
-
-    // Menguncup daun
-    leaf.style.opacity = '0';
-    leaf2.style.opacity = '0';
-
-    // Setelah beberapa detik, bunga mekar
-    setTimeout(() => {
-      // Panjang batang
-      stem.style.height = '100px';
-
-      // Daun keluar
-      leaf.style.opacity = '1';
-      leaf2.style.opacity = '1';
-
-      // Membuka kelopak bunga
-      flower.classList.add('mekar');
-
-      // Membuka kelopak
-      petals.forEach((petal, index) => {
-        setTimeout(() => {
-          petal.style.opacity = '1';
-        }, index * 300);
-      });
-
-      // Setelah bunga mekar, tampilkan efek petasan dan kalimat
-      setTimeout(() => {
-        triggerFireworks();
-        showMessage();
-      }, 2500);
-    }, 2000); // waktu sebelum bunga mekar
+/* Partikel untuk percikan */
+class Particle{
+  constructor(x,y,angle,speed,color){
+    this.x=x; this.y=y;
+    this.vx=Math.cos(angle)*speed;
+    this.vy=Math.sin(angle)*speed;
+    this.alpha=1;
+    this.color=color;
+    this.size=3+Math.random()*3;
   }
+  update(){
+    this.x+=this.vx; this.y+=this.vy;
+    this.vy+=0.05;           // gravitasi ringan
+    this.alpha-=0.015;       // memudar
+  }
+  draw(){
+    ctx.globalAlpha=this.alpha;
+    ctx.beginPath();
+    ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+    ctx.fillStyle=this.color;
+    ctx.fill();
+  }
+}
 
-  function triggerFireworks() {
-    const count = 20; // jumlah petasan
-    for (let i=0; i<count; i++) {
-      const firework = document.createElement('div');
-      firework.className = 'firework';
+let particles=[];
+function launchFirework(){
+  const x=Math.random()*W,
+        y=H,
+        peak=100+Math.random()*H*0.5,
+        color=`hsl(${Math.random()*360},100%,60%)`;
 
-      // Random posisi horizontal
-      firework.style.left = Math.random() * 80 + 10 + '%';
-
-      // Random delay
-      firework.style.bottom = '0';
-      fireworksContainer.appendChild(firework);
-
-      // Animasi
-      setTimeout(() => {
-        firework.style.transform = `translateY(-300px)`;
-        firework.style.opacity = '0';
-      }, 50 + Math.random() * 300);
-
-      // Hapus setelah selesai
-      setTimeout(() => {
-        if (firework.parentNode) {
-          firework.remove();
-        }
-      }, 1500 + Math.random() * 500);
+  /* roket naik */
+  const rocket=new Particle(x,y,-Math.PI/2,8+Math.random()*2,color);
+  rocket.update=function(){
+    this.x+=this.vx;
+    this.y+=this.vy;
+    if(this.y<peak){
+      /* boom! */
+      for(let i=0;i<60;i++){
+        particles.push(new Particle(this.x,this.y,Math.random()*Math.PI*2,Math.random()*6+2,color));
+      }
+      this.alpha=0;          // roket hilang
     }
+  };
+  particles.push(rocket);
+}
+
+let lastTime=0;
+function animate(time=0){
+  requestAnimationFrame(animate);
+
+  /* sapu bekas partikel secara halus (trail) */
+  ctx.globalCompositeOperation='destination-out';
+  ctx.fillStyle='rgba(0,0,0,0.2)';
+  ctx.fillRect(0,0,W,H);
+  ctx.globalCompositeOperation='lighter';
+
+  /* waktu peluncuran baru */
+  if(time-lastTime>400){
+    launchFirework();
+    lastTime=time;
   }
 
-  function showMessage() {
-    happyMsg.style.opacity = '1';
-  }
+  /* gambar partikel aktif */
+  particles.forEach((p,i)=>{
+    p.update();
+    p.draw();
+    if(p.alpha<=0) particles.splice(i,1);
+  });
+}
+
+/* Mulai kembang api setelah bunga mekar (6 detik) */
+setTimeout(()=>animate(),6000);
 </script>
-
 </body>
 </html>
