@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Selamat Ulang Tahun Della Putri Andini</title>
+<!-- Google Fonts untuk kalimat -->
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Pacifico', cursive;
+    position: relative;
+    color: #fff;
+  }
+
+  /* Container utama */
+  #container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  /* Bunga Tulip */
+  #tulip {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  /* Batang bunga */
+  #stem {
+    width: 10px;
+    height: 0;
+    background-color: #4CAF50;
+    border-radius: 5px;
+    transition: height 2s ease;
+  }
+
+  /* Daun */
+  #leaf {
+    width: 50px;
+    height: 20px;
+    background-color: #228B22;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 50%;
+    left: -15px;
+    transform: rotate(-30deg);
+    opacity: 0;
+    transition: all 2s ease;
+  }
+
+  #leaf2 {
+    width: 50px;
+    height: 20px;
+    background-color: #228B22;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 50%;
+    right: -15px;
+    transform: rotate(30deg);
+    opacity: 0;
+    transition: all 2s ease;
+  }
+
+  /* Bunga mekar (kelopak) */
+  #flower {
+    width: 80px;
+    height: 80px;
+    background-color: #FF69B4;
+    border-radius: 50%;
+    position: relative;
+    margin-top: 10px;
+    transform: scale(0);
+    transition: transform 2s ease, box-shadow 0.5s;
+    box-shadow: 0 0 20px #FF69B4, 0 0 40px #FF69B4 inset;
+  }
+
+  /* Kelopak tambahan untuk efek mekar */
+  .petal {
+    position: absolute;
+    width: 50px;
+    height: 80px;
+    background-color: #FF1493;
+    border-radius: 50% 50% 0 0;
+    top: -40px;
+    left: 15px;
+    transform-origin: bottom center;
+    opacity: 0;
+    transition: all 1s ease;
+  }
+
+  /* Posisi kelopak */
+  .petal1 { transform: rotate(0deg); }
+  .petal2 { transform: rotate(45deg); }
+  .petal3 { transform: rotate(-45deg); }
+
+  /* Kelopak lainnya */
+  #flower.mekar {
+    transform: scale(1);
+  }
+
+  /* Animasi petasan */
+  #fireworks {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 10px;
+    background: transparent;
+    z-index: 3;
+  }
+
+  /* Petasan */
+  .firework {
+    position: absolute;
+    bottom: 0;
+    width: 4px;
+    height: 4px;
+    background-color: #FFD700;
+    border-radius: 50%;
+    opacity: 0;
+    transform: translateY(0);
+    animation: explode 1s forwards;
+  }
+
+  @keyframes explode {
+    0% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-300px) scale(0);
+    }
+  }
+
+  /* Kalimat ucapan */
+  #happyBirthday {
+    position: absolute;
+    top: 20%;
+    width: 100%;
+    text-align: center;
+    font-size: 2em;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    opacity: 0;
+    animation: fadeIn 2s forwards;
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+</style>
+</head>
+<body>
+
+<div id="container">
+  <!-- Bunga Tulip -->
+  <div id="tulip" onclick="startAnimation()">
+    <div id="stem"></div>
+    <div id="leaf"></div>
+    <div id="leaf2"></div>
+    <div id="flower">
+      <div class="petal petal1"></div>
+      <div class="petal petal2"></div>
+      <div class="petal petal3"></div>
+    </div>
+  </div>
+
+  <!-- Petasan -->
+  <div id="fireworks"></div>
+
+  <!-- Kalimat ucapan -->
+  <div id="happyBirthday">Happy Birthday Sayangku Della Putri Andini! 🎉🎂🎁💖</div>
+</div>
+
+<script>
+  const tulip = document.getElementById('tulip');
+  const stem = document.getElementById('stem');
+  const leaf = document.getElementById('leaf');
+  const leaf2 = document.getElementById('leaf2');
+  const flower = document.getElementById('flower');
+  const petals = document.querySelectorAll('.petal');
+  const fireworksContainer = document.getElementById('fireworks');
+  const happyMsg = document.getElementById('happyBirthday');
+
+  let animationStarted = false;
+
+  function startAnimation() {
+    if (animationStarted) return; // agar tidak restart
+    animationStarted = true;
+
+    // Menguncup batang
+    stem.style.height = '0';
+
+    // Menguncup daun
+    leaf.style.opacity = '0';
+    leaf2.style.opacity = '0';
+
+    // Setelah beberapa detik, bunga mekar
+    setTimeout(() => {
+      // Panjang batang
+      stem.style.height = '100px';
+
+      // Daun keluar
+      leaf.style.opacity = '1';
+      leaf2.style.opacity = '1';
+
+      // Membuka kelopak bunga
+      flower.classList.add('mekar');
+
+      // Membuka kelopak
+      petals.forEach((petal, index) => {
+        setTimeout(() => {
+          petal.style.opacity = '1';
+        }, index * 300);
+      });
+
+      // Setelah bunga mekar, tampilkan efek petasan dan kalimat
+      setTimeout(() => {
+        triggerFireworks();
+        showMessage();
+      }, 2500);
+    }, 2000); // waktu sebelum bunga mekar
+  }
+
+  function triggerFireworks() {
+    const count = 20; // jumlah petasan
+    for (let i=0; i<count; i++) {
+      const firework = document.createElement('div');
+      firework.className = 'firework';
+
+      // Random posisi horizontal
+      firework.style.left = Math.random() * 80 + 10 + '%';
+
+      // Random delay
+      firework.style.bottom = '0';
+      fireworksContainer.appendChild(firework);
+
+      // Animasi
+      setTimeout(() => {
+        firework.style.transform = `translateY(-300px)`;
+        firework.style.opacity = '0';
+      }, 50 + Math.random() * 300);
+
+      // Hapus setelah selesai
+      setTimeout(() => {
+        if (firework.parentNode) {
+          firework.remove();
+        }
+      }, 1500 + Math.random() * 500);
+    }
+  }
+
+  function showMessage() {
+    happyMsg.style.opacity = '1';
+  }
+</script>
+
+</body>
+</html>
