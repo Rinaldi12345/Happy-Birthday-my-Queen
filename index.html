@@ -2,197 +2,185 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Happy Birthday – Della Putri Andini</title>
+<title>Flowers for Someone – Safe Edition</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
-html,body{
-  margin:0;
-  height:100%;
-  background:radial-gradient(circle at top, #f0f0f0 0%, #cce0ff 100%);
-  overflow:hidden;
-  font-family:'Segoe UI', cursive;
+/* === Latar & font === */
+html,body{margin:0;height:100%;overflow:hidden;
+  background:radial-gradient(circle at top,#ffeef4 0%,#cfe7ff 100%);
+  font-family:'Segoe UI',sans-serif;}
+/* ——— CANVAS fireworks & petal rain ——— */
+canvas{position:fixed;inset:0;pointer-events:none}
+
+/* ——— Bouquet wrapper ——— */
+#garden{
+  position:absolute;bottom:0;left:0;right:0;
+  display:flex;gap:4vw;justify-content:center;align-items:flex-end;
+  height:80%;
 }
 
-#scene{
-  position:relative;
-  width:100%;
-  height:100%;
-  display:flex;
-  align-items:flex-end;
-  justify-content:center;
-}
+/* ======== GENERIC FLOWER ======== */
+.flower{position:relative;transform:scale(0.3);opacity:0}
+.flower.animate{animation:bloom 4s ease-in-out forwards}
+@keyframes bloom{to{transform:scale(1);opacity:1}}
+.stem{position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+  width:12px;height:260px;border-radius:6px;background:#3fa23f;
+  background:linear-gradient(to top,#2e7d32,#66bb6a)}
+.petal{position:absolute;bottom:260px;left:50%;width:90px;height:130px;
+  transform-origin:bottom center;border-radius:50% 50% 0 0;opacity:0}
+.flower.animate .petal{animation:petal-open 3s ease-out forwards}
+@keyframes petal-open{0%{opacity:0;transform:translate(-50%,0) scale(0.2)}
+60%{opacity:1}100%{opacity:1;transform:translate(-50%,0) scale(1)}}
 
-.tulip{
-  position:relative;
-  width:150px;
-  height:300px;
-  animation:bloom 6s ease-in-out forwards 2s;
-}
+/* Mawar merah */
+.rose .petal{background:radial-gradient(circle at top left,#ff7373 0%,#c62828 90%)}
+.rose .petal:nth-child(1){--r:0deg}
+.rose .petal:nth-child(2){--r:40deg}
+.rose .petal:nth-child(3){--r:-40deg}
 
-/* Batang */
-.tulip::before{
-  content:'';
-  position:absolute;
-  left:50%; bottom:0;
-  transform:translateX(-50%);
-  width:10px; height:250px;
-  background:linear-gradient(to top, #4CAF50, #81C784);
-  border-radius:5px;
-}
+/* Tulip putih */
+.tulip .petal{background:radial-gradient(circle at top,#ffffff 0%,#e0e0e0 90%)}
+.tulip .petal:nth-child(1){--r:0deg}
+.tulip .petal:nth-child(2){--r:35deg}
+.tulip .petal:nth-child(3){--r:-35deg}
+.tulip .petal:nth-child(4){--r:17deg}
+.tulip .petal:nth-child(5){--r:-17deg}
 
-/* Kelopak */
-.petal {
-  position: absolute;
-  bottom:250px; left:50%;
-  width:80px; height:120px;
-  background:radial-gradient(ellipse at top, white, #f2f2f2);
-  border-radius:50% 50% 0 0;
-  opacity:0;
-  transform-origin:bottom center;
-}
+/* Sunflower kuning */
+.sun .petal{background:radial-gradient(circle at top,#ffe082 0%,#ffb300 90%)}
+.sun .petal{width:80px;height:120px}
+.sun .petal:nth-child(1){--r:0deg}
+.sun .petal:nth-child(2){--r:60deg}
+.sun .petal:nth-child(3){--r:-60deg}
+.sun .petal:nth-child(4){--r:120deg}
+.sun .petal:nth-child(5){--r:-120deg}
 
-/* Posisi dan animasi */
-.petal:nth-child(1){transform:translate(-50%,-10px) rotate(0deg) scale(0.3);}
-.petal:nth-child(2){transform:translate(-50%,-10px) rotate(-40deg) scale(0.3);}
-.petal:nth-child(3){transform:translate(-50%,-10px) rotate(40deg) scale(0.3);}
-.petal:nth-child(4){transform:translate(-50%,-10px) rotate(-20deg) scale(0.3);}
-.petal:nth-child(5){transform:translate(-50%,-10px) rotate(20deg) scale(0.3);}
+/* Rotasi tiap kelopak via CSS var */
+.petal{transform:translate(-50%,0) rotate(var(--r,0deg)) scale(0.3)}
+.flower.animate .petal{animation:petal-open 2.8s cubic-bezier(.3,1.5,.5,1) forwards}
 
-.tulip.mekar .petal {
-  opacity:1;
-  animation:petalMekar 2s ease-out forwards;
-}
-
-@keyframes petalMekar {
-  to { transform:translate(-50%,-10px) rotate(var(--r,0deg)) scale(1); }
-}
-
-@keyframes bloom {
-  0%{transform:scale(0.5);}
-  100%{transform:scale(1);}
-}
-
-#msg{
-  position:absolute;
-  top:10%;
-  width:100%;
-  text-align:center;
-  font-size:2.7em;
-  font-weight:bold;
-  letter-spacing:1px;
-  color:#d6336c;
-  text-shadow:2px 2px 8px rgba(0,0,0,0.2);
-  opacity:0;
-  animation:msg 2s ease-out forwards 6.2s;
-}
-
-@keyframes msg {
-  0% {opacity:0; transform:scale(0.8);}
-  100%{opacity:1; transform:scale(1);}
-}
-
-#fireworks{
-  position:fixed;
-  left:0; top:0;
-  width:100%; height:100%;
-  pointer-events:none;
-}
+/* ——— Ucapan ——— */
+#msg{position:absolute;top:8%;left:0;right:0;text-align:center;
+  font-size:2.7em;font-weight:600;letter-spacing:1px;
+  color:#d6336c;text-shadow:2px 2px 10px rgba(0,0,0,0.15);
+  opacity:0;transform:scale(.6)}
+#msg.show{animation:msgpop 2.2s ease-out forwards}
+@keyframes msgpop{to{opacity:1;transform:scale(1)}}
 </style>
 </head>
-
 <body>
+<canvas id="petals"></canvas>
 <canvas id="fireworks"></canvas>
 
-<div id="scene">
-  <div class="tulip" id="tulip">
-    <div class="petal" style="--r:0deg"></div>
-    <div class="petal" style="--r:-40deg"></div>
-    <div class="petal" style="--r:40deg"></div>
-    <div class="petal" style="--r:-20deg"></div>
-    <div class="petal" style="--r:20deg"></div>
+<div id="garden">
+  <!-- Mawar -->
+  <div class="flower rose" id="f1">
+    <div class="stem"></div>
+    <div class="petal"></div><div class="petal"></div><div class="petal"></div>
+  </div>
+  <!-- Tulip -->
+  <div class="flower tulip" id="f2">
+    <div class="stem"></div>
+    <div class="petal"></div><div class="petal"></div><div class="petal"></div>
+    <div class="petal"></div><div class="petal"></div>
+  </div>
+  <!-- Sunflower -->
+  <div class="flower sun" id="f3">
+    <div class="stem"></div>
+    <div class="petal"></div><div class="petal"></div><div class="petal"></div>
+    <div class="petal"></div><div class="petal"></div>
   </div>
 </div>
 
-<div id="msg">Happy Birthday Sayaangkuu<br>Della Putri Andini 🌷</div>
+<div id="msg">Happy&nbsp;Birthday&nbsp;Sayaangkuu<br>Della&nbsp;Putri&nbsp;Andini&nbsp;🌸</div>
 
 <script>
-/* === Animasi Mekar Kelopak === */
-setTimeout(()=>{
-  document.getElementById('tulip').classList.add('mekar');
-}, 2200);
+/* ============ Jadwal animasi bunga ============ */
+const flowers=[document.getElementById('f1'),
+               document.getElementById('f2'),
+               document.getElementById('f3')];
+flowers.forEach((f,i)=>setTimeout(()=>f.classList.add('animate'),1800+i*2200));
+setTimeout(()=>document.getElementById('msg').classList.add('show'),7500);
 
-/* === KEMBANG API === */
-const canvas=document.getElementById('fireworks'),
-      ctx=canvas.getContext('2d');
-let W,H;
-function resize(){W=canvas.width=innerWidth;H=canvas.height=innerHeight;}
-addEventListener('resize',resize); resize();
-
-class Particle{
-  constructor(x,y,angle,speed,color){
-    this.x=x; this.y=y;
-    this.vx=Math.cos(angle)*speed;
-    this.vy=Math.sin(angle)*speed;
-    this.alpha=1;
-    this.color=color;
-    this.size=2+Math.random()*3;
+/* ============ Kelopak jatuh ============ */
+const petalCanvas=document.getElementById('petals'),
+      pCtx=petalCanvas.getContext('2d');
+let W,H;function resize(){W=petalCanvas.width=innerWidth;H=petalCanvas.height=innerHeight}
+addEventListener('resize',resize);resize();
+class FallingPetal{
+  constructor(){
+    this.reset();
+  }
+  reset(){
+    this.x=Math.random()*W;
+    this.y=-20-Math.random()*H;
+    this.speed=1+Math.random()*1.5;
+    this.size=8+Math.random()*8;
+    this.swing=Math.random()*2*Math.PI;
   }
   update(){
-    this.x+=this.vx; this.y+=this.vy;
-    this.vy+=0.06;
-    this.alpha-=0.015;
+    this.y+=this.speed;
+    this.swing+=0.03;
+    this.x+=Math.sin(this.swing)*0.6;
+    if(this.y>H+20) this.reset();
   }
   draw(){
-    ctx.globalAlpha=this.alpha;
-    ctx.beginPath();
-    ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
-    ctx.fillStyle=this.color;
-    ctx.fill();
+    pCtx.beginPath();
+    pCtx.fillStyle='rgba(255,182,193,0.8)';
+    pCtx.ellipse(this.x,this.y,this.size*0.6,this.size,Math.PI/4,0,Math.PI*2);
+    pCtx.fill();
   }
 }
-
-let particles=[];
-function launchFirework(){
-  const x=Math.random()*W,
-        y=H,
-        peak=100+Math.random()*H*0.5,
-        color=`hsl(${Math.random()*360},100%,70%)`;
-
-  const rocket=new Particle(x,y,-Math.PI/2,7+Math.random()*2,color);
-  rocket.update=function(){
-    this.x+=this.vx; this.y+=this.vy;
-    if(this.y<peak){
-      for(let i=0;i<60;i++){
-        particles.push(new Particle(this.x,this.y,Math.random()*Math.PI*2,Math.random()*5+2,color));
-      }
-      this.alpha=0;
-    }
-  };
-  particles.push(rocket);
+const petals=Array.from({length:60},()=>new FallingPetal());
+function animatePetals(){
+  requestAnimationFrame(animatePetals);
+  pCtx.clearRect(0,0,W,H);
+  petals.forEach(p=>{p.update();p.draw()});
 }
+animatePetals();
 
-let lastTime=0;
-function animate(time=0){
-  requestAnimationFrame(animate);
-
-  ctx.globalCompositeOperation='destination-out';
-  ctx.fillStyle='rgba(0,0,0,0.2)';
-  ctx.fillRect(0,0,W,H);
-  ctx.globalCompositeOperation='lighter';
-
-  if(time-lastTime>400){
-    launchFirework();
-    lastTime=time;
+/* ============ Fireworks ============ */
+const fireCanvas=document.getElementById('fireworks'),
+      fCtx=fireCanvas.getContext('2d');
+function resizeFire(){fireCanvas.width=innerWidth;fireCanvas.height=innerHeight}
+addEventListener('resize',resizeFire);resizeFire();
+class Particle{
+  constructor(x,y,color){
+    const angle=Math.random()*2*Math.PI,
+          speed=Math.random()*5+2;
+    this.x=x;this.y=y;
+    this.vx=Math.cos(angle)*speed;
+    this.vy=Math.sin(angle)*speed;
+    this.alpha=1;this.color=color;this.size=2+Math.random()*3;
   }
-
-  particles.forEach((p,i)=>{
-    p.update();
-    p.draw();
-    if(p.alpha<=0) particles.splice(i,1);
-  });
+  update(){
+    this.x+=this.vx;this.y+=this.vy;
+    this.vy+=0.05;this.alpha-=0.015;
+  }
+  draw(){
+    fCtx.globalAlpha=this.alpha;
+    fCtx.beginPath();
+    fCtx.arc(this.x,this.y,this.size,0,Math.PI*2);
+    fCtx.fillStyle=this.color;fCtx.fill();
+  }
 }
-
-/* Mulai setelah bunga mekar */
-setTimeout(()=>animate(),6200);
+const boomParticles=[];
+function boom(x,y){
+  const c=`hsl(${Math.random()*360},100%,60%)`;
+  for(let i=0;i<70;i++) boomParticles.push(new Particle(x,y,c));
+}
+let lastBoom=0;
+function animateFire(t=0){
+  requestAnimationFrame(animateFire);
+  fCtx.globalCompositeOperation='destination-out';
+  fCtx.fillStyle='rgba(0,0,0,.25)';
+  fCtx.fillRect(0,0,fireCanvas.width,fireCanvas.height);
+  fCtx.globalCompositeOperation='lighter';
+  if(t-lastBoom>900){boom(Math.random()*fireCanvas.width,Math.random()*fireCanvas.height*0.5,c);lastBoom=t;}
+  boomParticles.forEach((p,i)=>{p.update();p.draw();if(p.alpha<=0)boomParticles.splice(i,1);});
+}
+/* Mulai kembang-api setelah semua bunga mekar */
+setTimeout(()=>animateFire(),8000);
 </script>
 </body>
 </html>
