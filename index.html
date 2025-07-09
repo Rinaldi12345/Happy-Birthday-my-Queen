@@ -3,18 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Happy Birthday – Della Putri Andini</title>
-
 <style>
-/* —— Latar & tipografi —— */
 html,body{
   margin:0;
   height:100%;
+  background:radial-gradient(circle at top, #f0f0f0 0%, #cce0ff 100%);
   overflow:hidden;
-  background:radial-gradient(circle at top, #ffd1dc 0%, #ff9a9e 100%);
-  font-family:'Comic Sans MS', cursive;
+  font-family:'Segoe UI', cursive;
 }
 
-/* —— Panggung utama —— */
 #scene{
   position:relative;
   width:100%;
@@ -24,11 +21,10 @@ html,body{
   justify-content:center;
 }
 
-/* —— Batang & bunga —— */
 .tulip{
   position:relative;
-  width:120px;
-  height:200px;
+  width:150px;
+  height:300px;
   animation:bloom 6s ease-in-out forwards 2s;
 }
 
@@ -38,70 +34,67 @@ html,body{
   position:absolute;
   left:50%; bottom:0;
   transform:translateX(-50%);
-  width:10px; height:180px;
-  background:#2ecc71;
+  width:10px; height:250px;
+  background:linear-gradient(to top, #4CAF50, #81C784);
   border-radius:5px;
 }
 
-/* Tiga kelopak */
-.petal{
-  position:absolute;
-  bottom:180px; left:50%;
-  transform-origin:bottom center;
-  background:#e74c3c;
-  width:0; height:0;
+/* Kelopak */
+.petal {
+  position: absolute;
+  bottom:250px; left:50%;
+  width:80px; height:120px;
+  background:radial-gradient(ellipse at top, white, #f2f2f2);
   border-radius:50% 50% 0 0;
-  transform:translate(-50%,0) scaleY(0.3);
+  opacity:0;
+  transform-origin:bottom center;
 }
 
-/* Animasi tiap kelopak */
-.petal:nth-child(1){width:70px;height:100px;animation:petal1 6s ease-in-out forwards 2s;}
-.petal:nth-child(2){width:70px;height:100px;animation:petal2 6s ease-in-out forwards 2s;}
-.petal:nth-child(3){width:70px;height:100px;animation:petal3 6s ease-in-out forwards 2s;}
+/* Posisi dan animasi */
+.petal:nth-child(1){transform:translate(-50%,-10px) rotate(0deg) scale(0.3);}
+.petal:nth-child(2){transform:translate(-50%,-10px) rotate(-40deg) scale(0.3);}
+.petal:nth-child(3){transform:translate(-50%,-10px) rotate(40deg) scale(0.3);}
+.petal:nth-child(4){transform:translate(-50%,-10px) rotate(-20deg) scale(0.3);}
+.petal:nth-child(5){transform:translate(-50%,-10px) rotate(20deg) scale(0.3);}
 
-@keyframes petal1{
-  0%  {transform:translate(-50%,0) rotate(0deg)  scaleY(0.5);}
-  60% {transform:translate(-50%,0) rotate(-30deg) scaleY(1);}
-  100%{transform:translate(-50%,0) rotate(-40deg) scaleY(1);}
-}
-@keyframes petal2{
-  0%  {transform:translate(-50%,0) rotate(0deg)  scaleY(0.5);}
-  60% {transform:translate(-50%,0) rotate(30deg)  scaleY(1);}
-  100%{transform:translate(-50%,0) rotate(40deg)  scaleY(1);}
-}
-@keyframes petal3{
-  0%,40% {opacity:0;}
-  60%,100%{opacity:1;transform:translate(-50%,10px) scaleY(1);}
+.tulip.mekar .petal {
+  opacity:1;
+  animation:petalMekar 2s ease-out forwards;
 }
 
-/* Animasi skala keseluruhan bunga */
-@keyframes bloom{
-  0%  {transform:scale(0.6);}
+@keyframes petalMekar {
+  to { transform:translate(-50%,-10px) rotate(var(--r,0deg)) scale(1); }
+}
+
+@keyframes bloom {
+  0%{transform:scale(0.5);}
   100%{transform:scale(1);}
 }
 
-/* —— Teks ucapan —— */
 #msg{
   position:absolute;
   top:10%;
   width:100%;
   text-align:center;
-  font-size:2.5em;
-  letter-spacing:2px;
+  font-size:2.7em;
+  font-weight:bold;
+  letter-spacing:1px;
+  color:#d6336c;
+  text-shadow:2px 2px 8px rgba(0,0,0,0.2);
   opacity:0;
-  animation:msg 2s ease-out forwards 6s; /* muncul saat mekar selesai */
-}
-@keyframes msg{
-  0%  {transform:scale(0.3); opacity:0;}
-  100%{transform:scale(1);   opacity:1;}
+  animation:msg 2s ease-out forwards 6.2s;
 }
 
-/* —— Kanvas kembang-api —— */
+@keyframes msg {
+  0% {opacity:0; transform:scale(0.8);}
+  100%{opacity:1; transform:scale(1);}
+}
+
 #fireworks{
   position:fixed;
   left:0; top:0;
   width:100%; height:100%;
-  pointer-events:none;   /* klik tak terhalang */
+  pointer-events:none;
 }
 </style>
 </head>
@@ -110,25 +103,30 @@ html,body{
 <canvas id="fireworks"></canvas>
 
 <div id="scene">
-  <div class="tulip">
-    <div class="petal"></div>
-    <div class="petal"></div>
-    <div class="petal"></div>
+  <div class="tulip" id="tulip">
+    <div class="petal" style="--r:0deg"></div>
+    <div class="petal" style="--r:-40deg"></div>
+    <div class="petal" style="--r:40deg"></div>
+    <div class="petal" style="--r:-20deg"></div>
+    <div class="petal" style="--r:20deg"></div>
   </div>
 </div>
 
-<div id="msg">Happy Birthday Sayaangkuu<br>Della Putri Andini</div>
+<div id="msg">Happy Birthday Sayaangkuu<br>Della Putri Andini 🌷</div>
 
 <script>
-/* ========= KEMBANG API ========= */
-/* Kanvas penuh layar */
+/* === Animasi Mekar Kelopak === */
+setTimeout(()=>{
+  document.getElementById('tulip').classList.add('mekar');
+}, 2200);
+
+/* === KEMBANG API === */
 const canvas=document.getElementById('fireworks'),
       ctx=canvas.getContext('2d');
 let W,H;
 function resize(){W=canvas.width=innerWidth;H=canvas.height=innerHeight;}
 addEventListener('resize',resize); resize();
 
-/* Partikel untuk percikan */
 class Particle{
   constructor(x,y,angle,speed,color){
     this.x=x; this.y=y;
@@ -136,12 +134,12 @@ class Particle{
     this.vy=Math.sin(angle)*speed;
     this.alpha=1;
     this.color=color;
-    this.size=3+Math.random()*3;
+    this.size=2+Math.random()*3;
   }
   update(){
     this.x+=this.vx; this.y+=this.vy;
-    this.vy+=0.05;           // gravitasi ringan
-    this.alpha-=0.015;       // memudar
+    this.vy+=0.06;
+    this.alpha-=0.015;
   }
   draw(){
     ctx.globalAlpha=this.alpha;
@@ -157,19 +155,16 @@ function launchFirework(){
   const x=Math.random()*W,
         y=H,
         peak=100+Math.random()*H*0.5,
-        color=`hsl(${Math.random()*360},100%,60%)`;
+        color=`hsl(${Math.random()*360},100%,70%)`;
 
-  /* roket naik */
-  const rocket=new Particle(x,y,-Math.PI/2,8+Math.random()*2,color);
+  const rocket=new Particle(x,y,-Math.PI/2,7+Math.random()*2,color);
   rocket.update=function(){
-    this.x+=this.vx;
-    this.y+=this.vy;
+    this.x+=this.vx; this.y+=this.vy;
     if(this.y<peak){
-      /* boom! */
       for(let i=0;i<60;i++){
-        particles.push(new Particle(this.x,this.y,Math.random()*Math.PI*2,Math.random()*6+2,color));
+        particles.push(new Particle(this.x,this.y,Math.random()*Math.PI*2,Math.random()*5+2,color));
       }
-      this.alpha=0;          // roket hilang
+      this.alpha=0;
     }
   };
   particles.push(rocket);
@@ -179,19 +174,16 @@ let lastTime=0;
 function animate(time=0){
   requestAnimationFrame(animate);
 
-  /* sapu bekas partikel secara halus (trail) */
   ctx.globalCompositeOperation='destination-out';
   ctx.fillStyle='rgba(0,0,0,0.2)';
   ctx.fillRect(0,0,W,H);
   ctx.globalCompositeOperation='lighter';
 
-  /* waktu peluncuran baru */
   if(time-lastTime>400){
     launchFirework();
     lastTime=time;
   }
 
-  /* gambar partikel aktif */
   particles.forEach((p,i)=>{
     p.update();
     p.draw();
@@ -199,8 +191,8 @@ function animate(time=0){
   });
 }
 
-/* Mulai kembang api setelah bunga mekar (6 detik) */
-setTimeout(()=>animate(),6000);
+/* Mulai setelah bunga mekar */
+setTimeout(()=>animate(),6200);
 </script>
 </body>
 </html>
